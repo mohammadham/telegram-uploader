@@ -9,7 +9,7 @@ from prompt_toolkit.layout import FormattedTextControl, Window, ConditionalMargi
 from prompt_toolkit.widgets import CheckboxList, RadioList
 from prompt_toolkit.widgets.base import E, _DialogList
 
-from telegram_upload.utils import aislice
+from telegram_uploader.utils import aislice
 
 _T = TypeVar("_T")
 

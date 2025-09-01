@@ -1,11 +1,11 @@
 import unittest
 from unittest.mock import patch, MagicMock
 
-from telegram_upload.client.progress_bar import get_progress_bar
+from telegram_uploader.client.progress_bar import get_progress_bar
 
 
 class TestGetProgressBar(unittest.TestCase):
-    @patch("telegram_upload.client.progress_bar.click")
+    @patch("telegram_uploader.client.progress_bar.click")
     def test_get_progress_bar(self, mock_click: MagicMock):
         action = "action"
         file = "file"

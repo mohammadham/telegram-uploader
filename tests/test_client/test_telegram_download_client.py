@@ -6,15 +6,15 @@ from unittest.mock import patch, mock_open, Mock, MagicMock, call
 
 from telethon.tl.types import DocumentAttributeFilename
 
-from telegram_upload.client.telegram_download_client import TelegramDownloadClient
-from telegram_upload.exceptions import TelegramUploadNoSpaceError
+from telegram_uploader.client.telegram_download_client import TelegramDownloadClient
+from telegram_uploader.exceptions import TelegramUploadNoSpaceError
 
 CONFIG_DATA = {'api_hash': '', 'api_id': ''}
 
 
 class TestTelegramDownloadClient(unittest.TestCase):
     @patch('builtins.open', mock_open(read_data=json.dumps(CONFIG_DATA)))
-    @patch('telegram_upload.client.telegram_download_client.TelegramClient.__init__', return_value=None)
+    @patch('telegram_uploader.client.telegram_download_client.TelegramClient.__init__', return_value=None)
     def setUp(self, m1) -> None:
         self.client = TelegramDownloadClient(Mock(), Mock(), Mock())
 
@@ -40,12 +40,12 @@ class TestTelegramDownloadClient(unittest.TestCase):
         m = Mock()
         m.document.attributes = [DocumentAttributeFilename('download.png')]
         m.size = 1000
-        with patch('telegram_upload.client.telegram_download_client.free_disk_usage', return_value=0), \
+        with patch('telegram_uploader.client.telegram_download_client.free_disk_usage', return_value=0), \
             self.assertRaises(TelegramUploadNoSpaceError):
             self.client.download_files('foo', [m])
 
-    @patch("telegram_upload.client.telegram_download_client.TelegramDownloadClient._iter_download_chunk_tasks")
-    @patch("telegram_upload.client.telegram_download_client.asyncio.wait")
+    @patch("telegram_uploader.client.telegram_download_client.TelegramDownloadClient._iter_download_chunk_tasks")
+    @patch("telegram_uploader.client.telegram_download_client.asyncio.wait")
     @unittest.skipIf(sys.version_info < (3, 8), "object MagicMock can't be used in 'await' expression")
     def test_download_file(self, mock_wait: MagicMock, mock_iter_download_chunk_tasks: MagicMock):
         mock_iter_download_chunk_tasks.return_value = [
@@ -66,8 +66,8 @@ class TestTelegramDownloadClient(unittest.TestCase):
         )
         mock_wait.assert_called_once_with(mock_iter_download_chunk_tasks.return_value)
 
-    @patch("telegram_upload.client.telegram_download_client.TelegramDownloadClient.loop")
-    @patch("telegram_upload.client.telegram_download_client.TelegramDownloadClient._iter_download")
+    @patch("telegram_uploader.client.telegram_download_client.TelegramDownloadClient.loop")
+    @patch("telegram_uploader.client.telegram_download_client.TelegramDownloadClient._iter_download")
     def test_iter_download_chunk_tasks(self, mock_iter_download: MagicMock, mock_loop: MagicMock):
         mock_input_location = MagicMock()
         part_size = 1024

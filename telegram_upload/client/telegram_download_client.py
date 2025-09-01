@@ -12,14 +12,14 @@ from telethon import TelegramClient, utils, helpers
 from telethon.client.downloads import MIN_CHUNK_SIZE
 from telethon.crypto import AES
 
-from telegram_upload.client.progress_bar import get_progress_bar
-from telegram_upload.download_files import DownloadFile
-from telegram_upload.exceptions import TelegramUploadNoSpaceError
-from telegram_upload.utils import free_disk_usage, sizeof_fmt, get_environment_integer
+from telegram_uploader.client.progress_bar import get_progress_bar
+from telegram_uploader.download_files import DownloadFile
+from telegram_uploader.exceptions import TelegramUploadNoSpaceError
+from telegram_uploader.utils import free_disk_usage, sizeof_fmt, get_environment_integer
 
 
 if sys.version_info < (3, 10):
-    from telegram_upload._compat import anext
+    from telegram_uploader._compat import anext
 
 
 PARALLEL_DOWNLOAD_BLOCKS = get_environment_integer('TELEGRAM_UPLOAD_PARALLEL_DOWNLOAD_BLOCKS', 10)

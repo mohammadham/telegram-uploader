@@ -8,9 +8,9 @@ import click
 import requests
 from telethon.tl.types import Message
 
-from telegram_upload.client import TelegramManagerClient
-from telegram_upload.config import default_config
-from telegram_upload.upload_files import NoLargeFiles
+from telegram_uploader.client import TelegramManagerClient
+from telegram_uploader.config import default_config
+from telegram_uploader.upload_files import NoLargeFiles
 
 VIDEO_FILE_EXTENSIONS = [
     "3gp", "asf", "avi", "f4v", "flv", "hevc", "m2ts", "m2v", "m4v", "mjpeg", "mkv", "mov", "mp4", "mpeg", "mpg", "mts",

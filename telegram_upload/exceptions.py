@@ -5,7 +5,7 @@ import sys
 
 import click
 
-from telegram_upload.config import prompt_config
+from telegram_uploader.config import prompt_config
 
 
 class ThumbError(Exception):

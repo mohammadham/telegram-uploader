@@ -11,7 +11,7 @@ from typing import Any, Sequence, Mapping, Tuple, Optional
 
 import click
 
-from telegram_upload.video import video_metadata
+from telegram_uploader.video import video_metadata
 
 try:
     from typing import LiteralString

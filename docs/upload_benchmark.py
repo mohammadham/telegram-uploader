@@ -13,10 +13,10 @@ from tabulate import tabulate
 from telethon.tl.patched import Message
 import matplotlib.pyplot as plt
 
-from telegram_upload.caption_formatter import FileSize
-from telegram_upload.client import TelegramManagerClient
-from telegram_upload.config import default_config
-from telegram_upload.upload_files import NoLargeFiles
+from telegram_uploader.caption_formatter import FileSize
+from telegram_uploader.client import TelegramManagerClient
+from telegram_uploader.config import default_config
+from telegram_uploader.upload_files import NoLargeFiles
 
 CHUNK = 1024 * 4
 REPEATS = 5

@@ -2,8 +2,8 @@ import asyncio
 import itertools
 import os
 import shutil
-from telegram_upload._compat import scandir
-from telegram_upload.exceptions import TelegramEnvironmentError
+from telegram_uploader._compat import scandir
+from telegram_uploader.exceptions import TelegramEnvironmentError
 
 
 def free_disk_usage(directory='.'):

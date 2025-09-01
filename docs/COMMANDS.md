@@ -11,7 +11,7 @@ pip3 install telegram-upload
 ```
 Or use it as a Python module:
 ```bash
-python -m telegram_upload.management <command> [options]
+python -m telegram_uploader.management <command> [options]
 ```
 
 ## Commands

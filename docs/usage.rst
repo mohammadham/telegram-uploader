@@ -2,12 +2,12 @@
 Usage
 #####
 
-.. click:: telegram_upload.management:upload
+.. click:: telegram_uploader.management:upload
    :prog: telegram-upload
    :show-nested:
 
 
-.. click:: telegram_upload.management:download
+.. click:: telegram_uploader.management:download
    :prog: telegram-download
    :show-nested:
 

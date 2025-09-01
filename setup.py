@@ -138,14 +138,14 @@ setup(
 
     entry_points={
         "console_scripts": [
-            "telegram-upload = telegram_upload.management:upload_cli",
-            "telegram-download = telegram_upload.management:download_cli",
-            "telegram-edit = telegram_upload.management:edit_cli",
-            "telegram-delete = telegram_upload.management:delete_cli",
-            "telegram-folder = telegram_upload.management:folder_cli",
-            "telegram-info = telegram_upload.management:info_cli",
-            "telegram-forward = telegram_upload.management:forward_cli",
-            "telegram-dforward = telegram_upload.management:dforward_cli",
+            "telegram-upload = telegram_uploader.management:upload_cli",
+            "telegram-download = telegram_uploader.management:download_cli",
+            "telegram-edit = telegram_uploader.management:edit_cli",
+            "telegram-delete = telegram_uploader.management:delete_cli",
+            "telegram-folder = telegram_uploader.management:folder_cli",
+            "telegram-info = telegram_uploader.management:info_cli",
+            "telegram-forward = telegram_uploader.management:forward_cli",
+            "telegram-dforward = telegram_uploader.management:dforward_cli",
 
         ],
     },

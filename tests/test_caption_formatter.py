@@ -5,7 +5,7 @@ from unittest.mock import patch, MagicMock, mock_open, call
 
 from click.testing import CliRunner
 
-from telegram_upload.caption_formatter import Duration, FileSize, FileMedia, FilePath, CHUNK_SIZE, CaptionFormatter, \
+from telegram_uploader.caption_formatter import Duration, FileSize, FileMedia, FilePath, CHUNK_SIZE, CaptionFormatter, \
     test_caption_format
 
 
@@ -92,7 +92,7 @@ class TestFileSize(unittest.TestCase):
 class TestFileMedia(unittest.TestCase):
     """Test the FileMedia class."""
 
-    @patch("telegram_upload.caption_formatter.video_metadata")
+    @patch("telegram_uploader.caption_formatter.video_metadata")
     def setUp(self, mock_video_metadata: MagicMock) -> None:
         """Set up the test case."""
         self.file_media = FileMedia("video.mkv")
@@ -213,7 +213,7 @@ class TestFilePath(unittest.TestCase):
         mock_open.return_value.__enter__.return_value.read.assert_has_calls([call(CHUNK_SIZE)] * 3)
         mock_hash_calculator.update.assert_has_calls([call(b"abc"), call(b"def")])
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_md5(self, mock_hashlib: MagicMock):
         """Test the md5 attribute."""
         mock_calculate_hash = MagicMock()
@@ -221,7 +221,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_calculate_hash.return_value, self.file_path.md5)
         mock_calculate_hash.assert_called_once_with(mock_hashlib.md5.return_value)
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_sha1(self, mock_hashlib: MagicMock):
         """Test the sha1 attribute."""
         mock_calculate_hash = MagicMock()
@@ -229,7 +229,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_calculate_hash.return_value, self.file_path.sha1)
         mock_calculate_hash.assert_called_once_with(mock_hashlib.sha1.return_value)
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_sha224(self, mock_hashlib: MagicMock):
         """Test the sha224 attribute."""
         mock_calculate_hash = MagicMock()
@@ -237,7 +237,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_calculate_hash.return_value, self.file_path.sha224)
         mock_calculate_hash.assert_called_once_with(mock_hashlib.sha224.return_value)
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_sha256(self, mock_hashlib: MagicMock):
         """Test the sha256 attribute."""
         mock_calculate_hash = MagicMock()
@@ -245,7 +245,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_calculate_hash.return_value, self.file_path.sha256)
         mock_calculate_hash.assert_called_once_with(mock_hashlib.sha256.return_value)
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_sha384(self, mock_hashlib: MagicMock):
         """Test the sha384 attribute."""
         mock_calculate_hash = MagicMock()
@@ -253,7 +253,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_calculate_hash.return_value, self.file_path.sha384)
         mock_calculate_hash.assert_called_once_with(mock_hashlib.sha384.return_value)
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_sha512(self, mock_hashlib: MagicMock):
         """Test the sha512 attribute."""
         mock_calculate_hash = MagicMock()
@@ -261,7 +261,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_calculate_hash.return_value, self.file_path.sha512)
         mock_calculate_hash.assert_called_once_with(mock_hashlib.sha512.return_value)
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_sha3_224(self, mock_hashlib: MagicMock):
         """Test the sha3_224 attribute."""
         mock_calculate_hash = MagicMock()
@@ -269,7 +269,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_calculate_hash.return_value, self.file_path.sha3_224)
         mock_calculate_hash.assert_called_once_with(mock_hashlib.sha3_224.return_value)
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_sha3_256(self, mock_hashlib: MagicMock):
         """Test the sha3_256 attribute."""
         mock_calculate_hash = MagicMock()
@@ -277,7 +277,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_calculate_hash.return_value, self.file_path.sha3_256)
         mock_calculate_hash.assert_called_once_with(mock_hashlib.sha3_256.return_value)
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_sha3_384(self, mock_hashlib: MagicMock):
         """Test the sha3_384 attribute."""
         mock_calculate_hash = MagicMock()
@@ -285,7 +285,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_calculate_hash.return_value, self.file_path.sha3_384)
         mock_calculate_hash.assert_called_once_with(mock_hashlib.sha3_384.return_value)
 
-    @patch("telegram_upload.caption_formatter.hashlib")
+    @patch("telegram_uploader.caption_formatter.hashlib")
     def test_sha3_512(self, mock_hashlib: MagicMock):
         """Test the sha3_512 attribute."""
         mock_calculate_hash = MagicMock()
@@ -303,13 +303,13 @@ class TestFilePath(unittest.TestCase):
         """Test the adler32 attribute."""
         self.assertEqual("081e0256", self.file_path.adler32)
 
-    @patch("telegram_upload.caption_formatter.os.stat")
+    @patch("telegram_uploader.caption_formatter.os.stat")
     def test_file_stat(self, mock_os_stat: MagicMock):
         """Test the file_stat attribute."""
         self.assertEqual(mock_os_stat.return_value, self.file_path._file_stat)
         mock_os_stat.assert_called_once_with("file.txt")
 
-    @patch("telegram_upload.caption_formatter.datetime")
+    @patch("telegram_uploader.caption_formatter.datetime")
     @unittest.skipIf(sys.version_info < (3, 8), "Python 3.7 is not supported.")
     def test_ctime(self, mock_datetime: MagicMock):
         """Test the ctime attribute."""
@@ -318,7 +318,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_datetime.datetime.fromtimestamp.return_value, self.file_path.ctime)
         mock_datetime.datetime.fromtimestamp.assert_called_once_with(mock_file_stat.st_ctime)
 
-    @patch("telegram_upload.caption_formatter.datetime")
+    @patch("telegram_uploader.caption_formatter.datetime")
     @unittest.skipIf(sys.version_info < (3, 8), "Python 3.7 is not supported.")
     def test_mtime(self, mock_datetime: MagicMock):
         """Test the mtime attribute."""
@@ -327,7 +327,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_datetime.datetime.fromtimestamp.return_value, self.file_path.mtime)
         mock_datetime.datetime.fromtimestamp.assert_called_once_with(mock_file_stat.st_mtime)
 
-    @patch("telegram_upload.caption_formatter.datetime")
+    @patch("telegram_uploader.caption_formatter.datetime")
     @unittest.skipIf(sys.version_info < (3, 8), "Python 3.7 is not supported.")
     def test_atime(self, mock_datetime: MagicMock):
         """Test the atime attribute."""
@@ -336,7 +336,7 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_datetime.datetime.fromtimestamp.return_value, self.file_path.atime)
         mock_datetime.datetime.fromtimestamp.assert_called_once_with(mock_file_stat.st_atime)
 
-    @patch("telegram_upload.caption_formatter.FileSize")
+    @patch("telegram_uploader.caption_formatter.FileSize")
     @unittest.skipIf(sys.version_info < (3, 8), "Python 3.7 is not supported.")
     def test_size(self, mock_file_size: MagicMock):
         """Test the size attribute."""
@@ -345,13 +345,13 @@ class TestFilePath(unittest.TestCase):
         self.assertEqual(mock_file_size.return_value, self.file_path.size)
         mock_file_size.assert_called_once_with(mock_file_stat.st_size)
 
-    @patch("telegram_upload.caption_formatter.FileMedia")
+    @patch("telegram_uploader.caption_formatter.FileMedia")
     def test_media(self, mock_file_media: MagicMock):
         """Test the media attribute."""
         self.assertEqual(mock_file_media.return_value, self.file_path.media)
         mock_file_media.assert_called_once_with(str(self.file_path))
 
-    @patch("telegram_upload.caption_formatter.mimetypes")
+    @patch("telegram_uploader.caption_formatter.mimetypes")
     def test_mimetype(self, mock_mimetypes: MagicMock):
         """Test the mimetype attribute."""
         self.assertEqual(mock_mimetypes.guess_type.return_value.__getitem__.return_value, self.file_path.mimetype)
@@ -369,7 +369,7 @@ class TestFilePath(unittest.TestCase):
         file_path = FilePath("/home/user/file.tar.gz")
         self.assertEqual("/home/user/file.tar.gz", str(file_path.absolute))
 
-    @patch("telegram_upload.caption_formatter.Path.cwd")
+    @patch("telegram_uploader.caption_formatter.Path.cwd")
     def test_relative(self, mock_cwd: MagicMock):
         """Test the relative attribute."""
         mock_cwd.return_value = Path("/home/user")
@@ -406,7 +406,7 @@ class TestCaptionFormatter(unittest.TestCase):
 class TestTestCaptionFormat(unittest.TestCase):
     """Test the test_caption_format function."""
 
-    @patch("telegram_upload.caption_formatter.print")
+    @patch("telegram_uploader.caption_formatter.print")
     def test_test_caption_format(self, mock_print: MagicMock):
         """Test the test_caption_format function."""
         runner = CliRunner()

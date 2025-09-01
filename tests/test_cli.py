@@ -2,8 +2,8 @@ import sys
 import unittest
 from unittest.mock import patch
 
-from telegram_upload.cli import show_checkboxlist, show_radiolist
-from telegram_upload.utils import async_to_sync
+from telegram_uploader.cli import show_checkboxlist, show_radiolist
+from telegram_uploader.utils import async_to_sync
 
 
 class TestShowCheckboxList(unittest.TestCase):

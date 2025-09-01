@@ -11,10 +11,10 @@ from telethon.errors import RPCError, FloodWaitError, InvalidBufferError
 from telethon.tl import types, functions, TLRequest
 from telethon.utils import pack_bot_file_id
 
-from telegram_upload.client.progress_bar import get_progress_bar
-from telegram_upload.exceptions import TelegramUploadDataLoss, MissingFileError
-from telegram_upload.upload_files import File
-from telegram_upload.utils import grouper, async_to_sync, get_environment_integer
+from telegram_uploader.client.progress_bar import get_progress_bar
+from telegram_uploader.exceptions import TelegramUploadDataLoss, MissingFileError
+from telegram_uploader.upload_files import File
+from telegram_uploader.utils import grouper, async_to_sync, get_environment_integer
 
 PARALLEL_UPLOAD_BLOCKS = get_environment_integer('TELEGRAM_UPLOAD_PARALLEL_UPLOAD_BLOCKS', 4)
 ALBUM_FILES = 10

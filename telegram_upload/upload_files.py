@@ -12,16 +12,16 @@ from hachoir.metadata.metadata import RootMetadata
 from hachoir.metadata.video import MP4Metadata
 from telethon.tl.types import DocumentAttributeVideo, DocumentAttributeFilename
 
-from telegram_upload.caption_formatter import CaptionFormatter, FilePath
-from telegram_upload.exceptions import TelegramInvalidFile, ThumbError
-from telegram_upload.utils import scantree, truncate
-from telegram_upload.video import get_video_thumb, video_metadata
+from telegram_uploader.caption_formatter import CaptionFormatter, FilePath
+from telegram_uploader.exceptions import TelegramInvalidFile, ThumbError
+from telegram_uploader.utils import scantree, truncate
+from telegram_uploader.video import get_video_thumb, video_metadata
 
 mimetypes.init()
 
 
 if TYPE_CHECKING:
-    from telegram_upload.client import TelegramManagerClient
+    from telegram_uploader.client import TelegramManagerClient
 
 
 def is_valid_file(file, error_logger=None):

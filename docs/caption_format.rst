@@ -29,7 +29,7 @@ For testing the caption variables before sending the file, you can use the next 
 
 .. code-block:: bash
 
-    $ python -m telegram_upload.caption_formatter file.txt "{file.absolute}"
+    $ python -m telegram_uploader.caption_formatter file.txt "{file.absolute}"
 
 We recommend you to use the latest command to test the caption variables before sending the file.
 

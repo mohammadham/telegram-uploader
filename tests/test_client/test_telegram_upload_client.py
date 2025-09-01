@@ -8,9 +8,9 @@ from unittest.mock import patch, mock_open, Mock, MagicMock, call
 from telethon import types
 from telethon.errors import FloodWaitError, RPCError
 
-from telegram_upload.client.telegram_upload_client import TelegramUploadClient
-from telegram_upload.exceptions import TelegramUploadDataLoss, MissingFileError
-from telegram_upload.upload_files import File
+from telegram_uploader.client.telegram_upload_client import TelegramUploadClient
+from telegram_uploader.exceptions import TelegramUploadDataLoss, MissingFileError
+from telegram_uploader.upload_files import File
 
 
 try:
@@ -33,14 +33,14 @@ class AnyArg(object):
 
 class TestTelegramUploadClient(IsolatedAsyncioTestCase):
     @patch('builtins.open', mock_open(read_data=json.dumps(CONFIG_DATA)))
-    @patch('telegram_upload.client.telegram_upload_client.TelegramClient.__init__', return_value=None)
+    @patch('telegram_uploader.client.telegram_upload_client.TelegramClient.__init__', return_value=None)
     def setUp(self, m1) -> None:
         self.upload_file_path = os.path.abspath(os.path.join(directory, 'logo.png'))
         self.client = TelegramUploadClient(Mock(), Mock(), Mock())
         self.client.send_file = Mock()
         self.client.send_file.return_value.media.document.size = os.path.getsize(self.upload_file_path)
 
-    @patch("telegram_upload.client.telegram_upload_client.TelegramUploadClient.forward_messages")
+    @patch("telegram_uploader.client.telegram_upload_client.TelegramUploadClient.forward_messages")
     def test_forward_to(self, mock_forward_messages: MagicMock):
         mock_message = MagicMock()
         mock_destinations = [MagicMock(), MagicMock()]
@@ -64,8 +64,8 @@ class TestTelegramUploadClient(IsolatedAsyncioTestCase):
             self.client.get_input_entity.return_value,
         )
 
-    @patch('telegram_upload.client.telegram_upload_client.TelegramUploadClient.send_files')
-    @patch('telegram_upload.client.telegram_upload_client.TelegramUploadClient._send_album_media')
+    @patch('telegram_uploader.client.telegram_upload_client.TelegramUploadClient.send_files')
+    @patch('telegram_uploader.client.telegram_upload_client.TelegramUploadClient._send_album_media')
     @unittest.skipIf(sys.version_info < (3, 8), "TypeError: An asyncio.Future, a coroutine or an awaitable is required")
     def test_send_files_as_album(self, mock_send_album_media: MagicMock, mock_send_files: MagicMock):
         entity = "entity"
@@ -76,7 +76,7 @@ class TestTelegramUploadClient(IsolatedAsyncioTestCase):
         )
         mock_send_album_media.assert_called_once_with(entity, mock_send_files.return_value)
 
-    @patch('telegram_upload.management.default_config')
+    @patch('telegram_uploader.management.default_config')
     def test_missing_file(self, m1):
         with self.assertRaises(MissingFileError):
             self.client.send_files('foo', [])
@@ -121,7 +121,7 @@ class TestTelegramUploadClient(IsolatedAsyncioTestCase):
             )
         with self.subTest("Test send files with thumb"), \
                 patch.object(File, "get_thumbnail", return_value="thumb.jpg"), \
-                patch('telegram_upload.client.telegram_upload_client.os') as mock_os:
+                patch('telegram_uploader.client.telegram_upload_client.os') as mock_os:
             mock_os.path.lexists.return_value = True
             entity = 'foo'
             file = File(MagicMock(max_caption_length=200), self.upload_file_path)
@@ -149,7 +149,7 @@ class TestTelegramUploadClient(IsolatedAsyncioTestCase):
         with self.assertRaises(TelegramUploadDataLoss):
             self.client.send_files('foo', [file])
 
-    @patch('telegram_upload.client.telegram_upload_client.utils')
+    @patch('telegram_uploader.client.telegram_upload_client.utils')
     @unittest.skipIf(sys.version_info < (3, 8), "TypeError: Cannot cast AsyncMock to any kind of InputMedia.")
     async def test_send_media(self, mock_utils: MagicMock):
         mock_client = MagicMock(max_caption_length=200)
@@ -161,11 +161,11 @@ class TestTelegramUploadClient(IsolatedAsyncioTestCase):
         entity = 'entity'
         mock_progress = MagicMock()
         file = File(mock_client, self.upload_file_path)
-        with patch('telegram_upload.client.telegram_upload_client.isinstance', return_value=True), \
+        with patch('telegram_uploader.client.telegram_upload_client.isinstance', return_value=True), \
                 self.subTest("Test photo"):
             await self.client._send_media(entity, file, mock_progress)
         isinstance_result = {types.InputMediaUploadedPhoto: False, types.InputMediaUploadedDocument: True}
-        with patch('telegram_upload.client.telegram_upload_client.isinstance',
+        with patch('telegram_uploader.client.telegram_upload_client.isinstance',
                    side_effect=lambda obj, target: isinstance_result.get(target, isinstance(obj, target))), \
                 self.subTest("Test Document"):
             await self.client._send_media(entity, file, mock_progress)

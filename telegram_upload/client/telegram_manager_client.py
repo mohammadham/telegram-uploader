@@ -13,10 +13,10 @@ from telethon.network import ConnectionTcpMTProxyRandomizedIntermediate
 from telethon.tl.types import DocumentAttributeFilename, User, InputPeerUser
 from telethon.version import __version__ as telethon_version
 
-from telegram_upload.client.telegram_download_client import TelegramDownloadClient
-from telegram_upload.client.telegram_upload_client import TelegramUploadClient
-from telegram_upload.config import SESSION_FILE
-from telegram_upload.exceptions import TelegramProxyError, InvalidApiFileError
+from telegram_uploader.client.telegram_download_client import TelegramDownloadClient
+from telegram_uploader.client.telegram_upload_client import TelegramUploadClient
+from telegram_uploader.config import SESSION_FILE
+from telegram_uploader.exceptions import TelegramProxyError, InvalidApiFileError
 
 if StrictVersion(telethon_version) >= StrictVersion('1.0'):
     import telethon.sync  # noqa

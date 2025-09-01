@@ -6,13 +6,13 @@ import os
 import click
 from telethon.tl.types import User
 
-from telegram_upload.cli import show_checkboxlist, show_radiolist
-from telegram_upload.client import TelegramManagerClient, get_message_file_attribute
-from telegram_upload.config import default_config, CONFIG_FILE
-from telegram_upload.download_files import KeepDownloadSplitFiles, JoinDownloadSplitFiles
-from telegram_upload.exceptions import catch
-from telegram_upload.upload_files import NoDirectoriesFiles, RecursiveFiles, NoLargeFiles, SplitFiles, is_valid_file
-from telegram_upload.utils import async_to_sync, amap, sync_to_async_iterator
+from telegram_uploader.cli import show_checkboxlist, show_radiolist
+from telegram_uploader.client import TelegramManagerClient, get_message_file_attribute
+from telegram_uploader.config import default_config, CONFIG_FILE
+from telegram_uploader.download_files import KeepDownloadSplitFiles, JoinDownloadSplitFiles
+from telegram_uploader.exceptions import catch
+from telegram_uploader.upload_files import NoDirectoriesFiles, RecursiveFiles, NoLargeFiles, SplitFiles, is_valid_file
+from telegram_uploader.utils import async_to_sync, amap, sync_to_async_iterator
 
 
 try:
