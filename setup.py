@@ -124,6 +124,7 @@ setup(
 
     description=__doc__.replace('\n', ' '),
     long_description=open(readme, 'r').read(),
+    long_description_content_type='text/x-rst',
     keywords=KEYWORDS,
     download_url=PACKAGE_DOWNLOAD_URL,
 
