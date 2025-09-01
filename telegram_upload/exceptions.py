@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Exceptions for telegram-upload."""
+"""Exceptions for telegram-uploader."""
 import sys
 
 import click

@@ -10,14 +10,14 @@ from setuptools import setup, find_packages
 
 AUTHOR = "MohammadHam"
 EMAIL = 'contacto@MohammadHam.ir'
-URL = 'https://github.com/MohammadHam/telegram-uploader/'
+URL = 'https://github.com/mohammadham/telegram-uploader/'
 
-PACKAGE_NAME = 'telegram-upload'
+PACKAGE_NAME = 'telegram-uploader'
 PACKAGE_DOWNLOAD_URL = 'https://github.com/mohammadham/telegram-uploader/archive/master.zip'
-MODULE = 'telegram_upload'
+MODULE = 'telegram_uploader'
 REQUIREMENT_FILE = 'requirements.txt'
 STATUS_LEVEL = 5  # 1:Planning 2:Pre-Alpha 3:Alpha 4:Beta 5:Production/Stable 6:Mature 7:Inactive
-KEYWORDS = ['telegram-upload', 'telegram', 'upload', 'video']
+KEYWORDS = ['telegram-uploader', 'telegram-upload' , 'telegram', 'upload', 'video']
 LICENSE = 'MIT license'
 
 CLASSIFIERS = [  # https://github.com/github/choosealicense.com/tree/gh-pages/_licenses
@@ -140,6 +140,13 @@ setup(
         "console_scripts": [
             "telegram-upload = telegram_upload.management:upload_cli",
             "telegram-download = telegram_upload.management:download_cli",
+            "telegram-edit = telegram_upload.management:edit_cli",
+            "telegram-delete = telegram_upload.management:delete_cli",
+            "telegram-folder = telegram_upload.management:folder_cli",
+            "telegram-info = telegram_upload.management:info_cli",
+            "telegram-forward = telegram_upload.management:forward_cli",
+            "telegram-dforward = telegram_upload.management:dforward_cli",
+
         ],
     },
 

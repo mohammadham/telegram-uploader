@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-"""Console script for telegram-upload."""
+"""Console script for telegram-uploader."""
 import os
 
 import click
@@ -436,13 +436,18 @@ def get_message_info(chat, message_id, config, proxy):
 upload_cli = catch(upload)
 download_cli = catch(download)
 delete_cli = catch(delete)
+forward_cli = catch(forward_messages_cmd)
+dforward_cli = catch(forward_and_download)
+info_cli = catch(get_message_info)
+edit_cli = catch(edit_message)
+folder_cli = catch(upload_folder)
 
 
 if __name__ == '__main__':
     import sys
     import re
     sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
-    commands = {'upload': upload_cli, 'download': download_cli, 'delete': delete_cli, 'forward-and-download': catch(forward_and_download), 'forward-messages': catch(forward_messages_cmd), 'get-message-info': catch(get_message_info), 'upload-folder': catch(upload_folder), 'edit-message': catch(edit_message)}
+    commands = {'upload': upload_cli, 'download': download_cli, 'delete': delete_cli, 'forward-and-download': dforward_cli, 'forward-messages': forward_cli, 'get-message-info': info_cli, 'upload-folder': folder_cli, 'edit-message': edit_cli}
     if len(sys.argv) < 2:
         sys.stderr.write('A command is required. Available commands: {}\n'.format(
             ', '.join(commands)
