@@ -10,7 +10,7 @@ This document describes the supported file types and their features. The files a
 `filesamples.com <https://filesamples.com/>`_ using the ``supported_file_types.py`` script in the ``docs`` folder.
 
 Keep in mind that the results may differ across platforms and Telegram clients. You can contribute by making a `pull
-request to the repository <https://github.com/Nekmo/telegram-upload/pulls>`_.
+request to the repository <https://github.com/mohammadham/telegram-uploader/pulls>`_.
 
 Video file types
 ----------------
@@ -122,7 +122,7 @@ mjpeg
 ~~~~~
 Motion JPEG.
 
-Error uploading the file. See the `issue #204 <https://github.com/Nekmo/telegram-upload/issues/204>`_
+Error uploading the file. See the `issue #204 <https://github.com/mohammadham/telegram-uploader/issues/204>`_
 
 mpeg
 ~~~~

@@ -27,26 +27,26 @@ Other releases
 --------------
 You can install other versions from Pypi using::
 
-    $ pip install telegram-upload==<version>
+    $ pip install telegram-uploader==<version>
 
 For versions that are not in Pypi (it is a development version)::
 
-    $ pip install git+https://github.com/Nekmo/telegram-upload.git@<branch>#egg=telegram_upload
+    $ pip install git+https://github.com/mohammadham/telegram-uploader.git@<branch>#egg=telegram_upload
 
 
 If you do not have git installed::
 
-    $ pip install https://github.com/Nekmo/telegram-upload/archive/<branch>.zip
+    $ pip install https://github.com/mohammadham/telegram-uploader/archive/<branch>.zip
 
 Docker
 ======
-Run telegram-upload without installing it on your system using Docker. Instead of ``telegram-upload``
+Run telegram-uploader without installing it on your system using Docker. Instead of ``telegram-upload``
 and ``telegram-download`` you should use ``upload`` and ``download``. Usage::
 
 
     docker run -v <files_dir>:/files/
                -v <config_dir>:/config/
-               -it nekmo/telegram-upload:master
+               -it mohammadham/telegram-uploader:master
                <command> <args>
 
 * ``<files_dir>``: Upload or download directory.
@@ -59,5 +59,5 @@ For example::
 
     docker run -v /media/data/:/files/
                -v $PWD/config:/config/
-               -it nekmo/telegram-upload:master
+               -it mohammadham/telegram-uploader:master
                upload file_to_upload.txt

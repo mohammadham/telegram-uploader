@@ -2,6 +2,6 @@
 
 """Top-level package for telegram-upload."""
 
-__author__ = """Nekmo"""
-__email__ = 'contacto@nekmo.com'
-__version__ = '0.7.1'
+__author__ = """MohammadHam"""
+__email__ = 'contacto@mohammadham.ir'
+__version__ = '0.9.0'

@@ -1,3 +1,15 @@
+0.9.0 (2025-09-01)
+------------------
+
+* Add full documentation for all commands and options in docs/COMMANDS.md
+* Add new options: --output-dir, --overwrite for download
+* Add new commands: edit-message, upload-folder, get-message-info
+* Improve forward-and-download and forward-messages commands
+0.8.0 (2025-09-01)
+------------------
+
+* Feature: Add --json-output and --json-minimal options for clean JSON output after upload (no extra text).
+* Fix: Suppress print_file_id and other messages when JSON output is enabled for better integration.
 =======
 History
 =======

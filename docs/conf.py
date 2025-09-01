@@ -60,15 +60,15 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'Telegram Upload'
-copyright = u"%i, Nekmo Com" % datetime.date.today().year
+project = u'Telegram Uploader'
+copyright = u"%i, MohammadHam Com" % datetime.date.today().year
 
-pdf_documents = [('index', u'rst2pdf', u'Telegram Upload', u'Nekmo'), ]
+pdf_documents = [('index', u'rst2pdf', u'Telegram Uploader', u'MohammadHam'), ]
 
 rinoh_documents = [('index',            # top-level file (index.rst)
                     'target',           # output (target.pdf)
-                    'Telegram Upload',   # document title
-                    'Nekmo')]   # document author
+                    'Telegram Uploader',   # document title
+                    'MohammadHam')]   # document author
 # rinoh_logo = '_static/logo.png'
 rinoh_domain_indices = False
 
@@ -135,8 +135,8 @@ html_theme = os.environ.get('HTML_THEME', 'alabaster')
 html_theme_options = {
     'logo': 'logo.png',
     'description': 'Upload and download files to Telegram up to 4 GiB',
-    'github_user': 'Nekmo',
-    'github_repo': 'telegram-upload',
+    'github_user': 'MohammadHam',
+    'github_repo': 'telegram-uploader',
     'github_type': 'star',
     'github_banner': True,
     'travis_button': True,
@@ -245,8 +245,8 @@ latex_elements = {
 # [howto/manual]).
 latex_documents = [
     ('index', 'Telegram Upload.tex',
-     u'Telegram Upload Documentation',
-     u'Nekmo', 'manual'),
+     u'Telegram Uploader Documentation',
+     u'MohammadHam', 'manual'),
 ]
 
 # The name of an image file (relative to this directory) to place at
@@ -275,9 +275,9 @@ latex_documents = [
 # One entry per manual page. List of tuples
 # (source start file, name, description, authors, manual section).
 man_pages = [
-    ('index', 'Telegram Upload',
-     u'Telegram Upload Documentation',
-     [u'Nekmo'], 1)
+    ('index', 'Telegram Uploader',
+     u'Telegram Uploader Documentation',
+     [u'MohammadHam'], 1)
 ]
 
 # If true, show URL addresses after external links.
@@ -290,9 +290,9 @@ man_pages = [
 # (source start file, target name, title, author,
 #  dir menu entry, description, category)
 texinfo_documents = [
-    ('index', 'Telegram Upload',
-     u'Telegram Upload Documentation',
-     u'Nekmo',
+    ('index', 'Telegram Uploader',
+     u'Telegram Uploader Documentation',
+     u'MohammadHam',
      'Telegram Upload',
      'One line description of project.',
      'Miscellaneous'),

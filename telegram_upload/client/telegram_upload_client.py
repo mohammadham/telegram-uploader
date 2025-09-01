@@ -25,6 +25,51 @@ MIN_RECONNECT_WAIT = get_environment_integer('TELEGRAM_UPLOAD_MIN_RECONNECT_WAIT
 
 
 class TelegramUploadClient(TelegramClient):
+    def get_message_json(self, message):
+        """
+        دریافت اطلاعات کامل پیام و تبدیل به JSON
+        """
+        import json
+        if not message:
+            return json.dumps({"error": "No message returned"}, ensure_ascii=False)
+        data = {
+            "message_id": getattr(message, 'id', None),
+            "chat_id": getattr(getattr(message, 'chat', None), 'id', None),
+            "file_id": None,
+            "date": str(getattr(message, 'date', None)),
+            "sender_id": getattr(getattr(message, 'sender', None), 'id', None),
+            "text": getattr(message, 'text', None),
+            "media": str(getattr(message, 'media', None)),
+        }
+        # استخراج file_id اگر media وجود داشته باشد
+        if hasattr(message, 'media') and message.media:
+            try:
+                from telethon.utils import pack_bot_file_id , get_message_id
+                data["file_id"] = pack_bot_file_id(message.media)
+                data["message_id"] = get_message_id(message)
+            except Exception:
+                data["file_id"] = None
+        return json.dumps(data, ensure_ascii=False, indent=2)
+
+    def get_message_minimal_json(self, message):
+        """
+        دریافت فقط file_id و message_id به صورت JSON
+        """
+        import json
+        file_id = None
+        message_id = None
+        if hasattr(message, 'media') and message.media:
+            try:
+                from telethon.utils import pack_bot_file_id , get_message_id
+                file_id = pack_bot_file_id(message.media)
+                message_id = get_message_id(message)
+            except Exception:
+                file_id = None
+        data = {
+            "message_id": message_id,
+            "file_id": file_id
+        }
+        return json.dumps(data, ensure_ascii=False, indent=2)
     parallel_upload_blocks = PARALLEL_UPLOAD_BLOCKS
 
     def __init__(self, *args, **kwargs):
@@ -143,8 +188,8 @@ class TelegramUploadClient(TelegramClient):
         return messages
 
     async def upload_file(
-            self: 'TelegramClient',
-            file: 'hints.FileLike',
+            self,
+            file,
             *,
             part_size_kb: float = None,
             file_size: int = None,
@@ -152,7 +197,7 @@ class TelegramUploadClient(TelegramClient):
             use_cache: type = None,
             key: bytes = None,
             iv: bytes = None,
-            progress_callback: 'hints.ProgressCallback' = None) -> 'types.TypeInputFile':
+            progress_callback = None) -> 'types.TypeInputFile':
         """
         Uploads a file to Telegram's servers, without sending it.
 
@@ -328,7 +373,7 @@ class TelegramUploadClient(TelegramClient):
     # endregion
 
     async def _send_file_part(self, request: TLRequest, part_index: int, part_count: int, pos: int, file_size: int,
-                              progress_callback: Optional['hints.ProgressCallback'] = None, retry: int = 0) -> None:
+                              progress_callback = None, retry: int = 0) -> None:
         """
         Submit the file request part to Telegram. This method waits for the request to be executed, logs the upload,
         and releases the semaphore to allow further uploading.

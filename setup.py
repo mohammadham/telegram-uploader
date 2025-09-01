@@ -8,12 +8,12 @@ import glob
 from itertools import chain
 from setuptools import setup, find_packages
 
-AUTHOR = "Nekmo"
-EMAIL = 'contacto@nekmo.com'
-URL = 'https://github.com/Nekmo/telegram-upload/'
+AUTHOR = "MohammadHam"
+EMAIL = 'contacto@MohammadHam.ir'
+URL = 'https://github.com/MohammadHam/telegram-uploader/'
 
 PACKAGE_NAME = 'telegram-upload'
-PACKAGE_DOWNLOAD_URL = 'https://github.com/Nekmo/telegram-upload/archive/master.zip'
+PACKAGE_DOWNLOAD_URL = 'https://github.com/mohammadham/telegram-uploader/archive/master.zip'
 MODULE = 'telegram_upload'
 REQUIREMENT_FILE = 'requirements.txt'
 STATUS_LEVEL = 5  # 1:Planning 2:Pre-Alpha 3:Alpha 4:Beta 5:Production/Stable 6:Mature 7:Inactive

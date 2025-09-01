@@ -1,15 +1,15 @@
 
-.. image:: https://raw.githubusercontent.com/Nekmo/telegram-upload/master/logo.png
+.. image:: https://raw.githubusercontent.com/mohammadham/telegram-uploader/master/logo.png
     :width: 100%
 
 |
 
-.. image:: https://raw.githubusercontent.com/Nekmo/telegram-upload/pip-rating-badge/pip-rating-badge.svg
-  :target: https://github.com/Nekmo/telegram-upload/actions/workflows/pip-rating.yml
+.. image:: https://raw.githubusercontent.com/mohammadham/telegram-uploader/pip-rating-badge/pip-rating-badge.svg
+  :target: https://github.com/mohammadham/telegram-uploader/actions/workflows/pip-rating.yml
   :alt: pip-rating badge
 
-.. image:: https://img.shields.io/github/actions/workflow/status/Nekmo/telegram-upload/test.yml?style=flat-square&maxAge=2592000&branch=master
-  :target: https://github.com/Nekmo/telegram-upload/actions?query=workflow%3ATests
+.. image:: https://img.shields.io/github/actions/workflow/status/mohammadham/telegram-uploader/test.yml?style=flat-square&maxAge=2592000&branch=master
+  :target: https://github.com/mohammadham/telegram-uploader/actions?query=workflow%3ATests
   :alt: Latest Tests CI build status
 
 .. image:: https://img.shields.io/pypi/v/telegram-upload.svg?style=flat-square
@@ -28,28 +28,28 @@
   :target: https://codecov.io/github/Nekmo/telegram-upload
   :alt: Test coverage
 
-.. image:: https://img.shields.io/github/stars/Nekmo/telegram-upload?style=flat-square
-     :target: https://github.com/Nekmo/telegram-upload
+.. image:: https://img.shields.io/github/stars/mohammadham/telegram-uploader?style=flat-square
+     :target: https://github.com/mohammadham/telegram-uploader
      :alt: Github stars
 
 
 ###############
-telegram-upload
+telegram-uploader
 ###############
-Telegram-upload uses your **personal Telegram account** to **upload** and **download** files up to **4 GiB** (2 GiB for
-free users). Turn Telegram into your personal ☁ cloud!
+Telegram-uploader uses your **personal Telegram account** to **upload** / **download**  files up to **4 GiB** (2 GiB for
+free users) and ext actions. Turn Telegram into your personal ☁ cloud!
 
-To **install 🔧 telegram-upload**, run this command in your terminal:
+To **install 🔧 telegram-uploader**, run this command in your terminal:
 
 .. code-block:: console
 
-    $ sudo pip3 install -U telegram-upload
+    $ sudo pip3 install -U telegram-uploader
 
 This is the preferred method to install telegram-upload, as it will always install the most recent stable release.
 🐍 **Python 3.7-3.11** are tested and supported. There are other installation ways available like `Docker <#-docker>`_.
 More info in the `📕 documentation <https://docs.nekmo.org/telegram-upload/installation.html>`_
 
-.. image:: https://raw.githubusercontent.com/Nekmo/telegram-upload/master/telegram-upload-demo.gif
+.. image:: https://raw.githubusercontent.com/mohammadham/telegram-uploader/master/telegram-upload-demo.gif
   :target: https://asciinema.org/a/592098
   :width: 100%
 
@@ -131,11 +131,35 @@ download files on your computer away from home.
 Configuration
 -------------
 Credentials are saved in ``~/.config/telegram-upload.json`` and ``~/.config/telegram-upload.session``. You must make
-sure that these files are secured. You can copy these 📁 files to authenticate ``telegram-upload`` on more machines, but
-it is advisable to create a session file for each machine.
+sure that these files are secured. You can copy these 📁 files to authenticate ``telegram-uploader`` on more machines, but
+it is advisable to create a session file for each machine or in config file set session method with session file address.
 
 More options
 ------------
+
+JSON output options
+------------------
+You can get the upload result as JSON for integration with other tools:
+
+.. code-block:: console
+
+  $ telegram-upload file.jpg --json-output
+
+This will print all available info about the uploaded file/message as JSON.
+
+If you only need file_id and message_id:
+
+.. code-block:: console
+
+  $ telegram-upload file.jpg --json-minimal
+
+No other text will be printed when these options are used, so you can safely parse the output.
+
+
+Full command reference and options are available in the documentation:
+
+`See COMMANDS.md for all commands and options <docs/COMMANDS.md>`_
+
 Telegram-upload has more options available, like customizing the files thumbnail, set a caption message (including
 variables) or configuring a proxy.
 `Read the documentation <https://docs.nekmo.org/telegram-upload/usage.html#telegram-download>`_ for more info.
@@ -177,7 +201,7 @@ For example::
 
 ❤️ Thanks
 =========
-This project developed by `Nekmo <https://github.com/Nekmo>`_ & `collaborators <https://github.com/Nekmo/telegram-upload/graphs/contributors>`_ would not be possible without
+This project developed by `MohammadHam <https://github.com/mohammadham>`_  and base project developed by`Nekmo <https://github.com/Nekmo>`_ & `collaborators <https://github.com/Nekmo/telegram-upload/graphs/contributors>`_ would not be possible without
 `Telethon <https://github.com/LonamiWebs/Telethon>`_, the library used as a Telegram client.
 
-Telegram-upload is licensed under the `MIT license <https://github.com/Nekmo/telegram-upload/blob/master/LICENSE>`_.
+Telegram-upload is licensed under the `MIT license <https://github.com/mohammadham/telegram-uploader/blob/master/LICENSE>`_.

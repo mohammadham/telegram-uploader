@@ -68,7 +68,7 @@ dependencies carefully::
 To avoid errors it is recommended to use `virtualenvs <https://docs.python-guide.org/dev/virtualenvs/>`_.
 
 Before asking for help, remember to find out if `the issue already exists <https://github
-.com/Nekmo/telegram-upload/issues>`_. If you open a ticket remember to paste your system dependencies on the issue::
+.com/mohammadham/telegram-uploader/issues>`_. If you open a ticket remember to paste your system dependencies on the issue::
 
     $ pip freeze
 
