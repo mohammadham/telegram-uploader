@@ -33,9 +33,9 @@
      :alt: Github stars
 
 
-###############
+################
 telegram-uploader
-###############
+################
 Telegram-uploader uses your **personal Telegram account** to **upload** / **download**  files up to **4 GiB** (2 GiB for
 free users) and ext actions. Turn Telegram into your personal ☁ cloud!
 
