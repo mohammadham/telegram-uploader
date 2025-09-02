@@ -137,7 +137,7 @@ More options
 ------------
 
 JSON output options
-------------------
+-------------------
 You can get the upload result as JSON for integration with other tools:
 
 .. code-block:: console
