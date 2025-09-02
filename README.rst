@@ -32,7 +32,6 @@
      :target: https://github.com/mohammadham/telegram-uploader
      :alt: Github stars
 
-
 ################
 telegram-uploader
 ################
