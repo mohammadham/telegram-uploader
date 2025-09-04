@@ -184,7 +184,7 @@ and ``telegram-download`` you should use ``upload`` and ``download``. Usage::
 
     $ docker run -v <files_dir>:/files/
                  -v <config_dir>:/config
-                 -it nekmo/telegram-upload:master
+                 -it mohammadham/telegram-uploader:master
                  <command> <args>
 
 * ``<files_dir>``: upload or download directory.
@@ -197,7 +197,7 @@ For example::
 
     $ docker run -v /media/data/:/files/
                  -v $PWD/config:/config
-                 -it nekmo/telegram-upload:master
+                 -it mohammadham/telegram-uploader:master
                  upload file_to_upload.txt
 
 ❤️ Thanks
