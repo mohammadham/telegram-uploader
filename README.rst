@@ -46,7 +46,32 @@ To **install 🔧 telegram-uploader**, run this command in your terminal:
 
 This is the preferred method to install telegram-upload, as it will always install the most recent stable release.
 🐍 **Python 3.7-3.11** are tested and supported. There are other installation ways available like `Docker <#-docker>`_.
-More info in the `📕 documentation <https://docs.nekmo.org/telegram-upload/installation.html>`_
+New options
+-----------
+
+JSON output options
+-------------------
+You can get the upload result as JSON for integration with other tools:
+
+.. code-block:: console
+
+  $ telegram-upload file.jpg --json-output
+
+This will print all available info about the uploaded file/message as JSON.
+
+If you only need file_id and message_id:
+
+.. code-block:: console
+
+  $ telegram-upload file.jpg --json-minimal
+
+No other text will be printed when these options are used, so you can safely parse the output.
+
+
+Full command reference and options are available in the documentation:
+
+`See COMMANDS.md for all commands and options <docs/COMMANDS.md>`_
+
 
 .. image:: https://raw.githubusercontent.com/mohammadham/telegram-uploader/master/telegram-upload-demo.gif
   :target: https://asciinema.org/a/592098
@@ -135,29 +160,6 @@ it is advisable to create a session file for each machine or in config file set 
 
 More options
 ------------
-
-JSON output options
--------------------
-You can get the upload result as JSON for integration with other tools:
-
-.. code-block:: console
-
-  $ telegram-upload file.jpg --json-output
-
-This will print all available info about the uploaded file/message as JSON.
-
-If you only need file_id and message_id:
-
-.. code-block:: console
-
-  $ telegram-upload file.jpg --json-minimal
-
-No other text will be printed when these options are used, so you can safely parse the output.
-
-
-Full command reference and options are available in the documentation:
-
-`See COMMANDS.md for all commands and options <docs/COMMANDS.md>`_
 
 Telegram-upload has more options available, like customizing the files thumbnail, set a caption message (including
 variables) or configuring a proxy.

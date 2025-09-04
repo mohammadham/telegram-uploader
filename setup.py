@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-"""Upload (and download) files to Telegram up to 4 GiB using your account.
+""" A simple tool for interacting with the Telegram API, enabling file uploads (2GB), downloads, message deletion, and other common tasks. Built for automation and easy management of Telegram account activities.
 """
 import copy
 import os
