@@ -9,7 +9,7 @@ VOLUME /files
 RUN mkdir /app
 COPY requirements.txt /tmp/
 RUN pip install -r /tmp/requirements.txt
-COPY telegram_upload/ /app/telegram_upload/
+COPY telegram_uploader/ /app/telegram_uploader/
 WORKDIR /files
 
-ENTRYPOINT ["/usr/local/bin/python", "/app/telegram_upload/management.py"]
+ENTRYPOINT ["/usr/local/bin/python", "/app/telegram_uploader/management.py"]
