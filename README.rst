@@ -4,34 +4,6 @@
 
 |
 
-.. image:: https://raw.githubusercontent.com/mohammadham/telegram-uploader/pip-rating-badge/pip-rating-badge.svg
-  :target: https://github.com/mohammadham/telegram-uploader/actions/workflows/pip-rating.yml
-  :alt: pip-rating badge
-
-.. image:: https://img.shields.io/github/actions/workflow/status/mohammadham/telegram-uploader/test.yml?style=flat-square&maxAge=2592000&branch=master
-  :target: https://github.com/mohammadham/telegram-uploader/actions?query=workflow%3ATests
-  :alt: Latest Tests CI build status
-
-.. image:: https://img.shields.io/pypi/v/telegram-upload.svg?style=flat-square
-  :target: https://pypi.org/project/telegram-upload/
-  :alt: Latest PyPI version
-
-.. image:: https://img.shields.io/pypi/pyversions/telegram-upload.svg?style=flat-square
-  :target: https://pypi.org/project/telegram-upload/
-  :alt: Python versions
-
-.. image:: https://img.shields.io/codeclimate/maintainability/Nekmo/telegram-upload.svg?style=flat-square
-  :target: https://codeclimate.com/github/Nekmo/telegram-upload
-  :alt: Code Climate
-
-.. image:: https://img.shields.io/codecov/c/github/Nekmo/telegram-upload/master.svg?style=flat-square
-  :target: https://codecov.io/github/Nekmo/telegram-upload
-  :alt: Test coverage
-
-.. image:: https://img.shields.io/github/stars/mohammadham/telegram-uploader?style=flat-square
-     :target: https://github.com/mohammadham/telegram-uploader
-     :alt: Github stars
-
 #################
 telegram-uploader
 #################
