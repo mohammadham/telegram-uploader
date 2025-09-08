@@ -4,7 +4,7 @@
 
 __author__ = """mohammadham"""
 __email__ = 'contacto@mohammadham.ir'
-__version__ = '0.9.1'
+__version__ = '0.9.2'
 
 # Library API
 from .api import (
