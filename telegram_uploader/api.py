@@ -3,9 +3,18 @@ High-level Python API for telegram-uploader library.
 """
 from typing import List, Optional, Union
 from .client.telegram_manager_client import TelegramManagerClient
-from .upload_files import is_valid_file, NoDirectoriesFiles, RecursiveFiles, NoLargeFiles, SplitFiles
+from .upload_files import (
+    is_valid_file,
+    NoDirectoriesFiles,
+    RecursiveFiles,
+    NoLargeFiles,
+    SplitFiles,
+    LargeFilesStream,
+    LargeFilesFail,
+)
 from .download_files import DownloadFile, KeepDownloadSplitFiles, JoinDownloadSplitFiles
 from .exceptions import TelegramUploadError
+from .utils import natsorted
 
 
 def create_client(config_file: Optional[str] = None, proxy: Optional[str] = None, **kwargs) -> TelegramManagerClient:
@@ -13,6 +22,21 @@ def create_client(config_file: Optional[str] = None, proxy: Optional[str] = None
     Create and return a TelegramManagerClient instance.
     """
     return TelegramManagerClient(config_file=config_file, proxy=proxy, **kwargs)
+
+WarnFunc = Callable[[str], None]
+
+# 1-to-1 mapping kept in cli
+DIRECTORY_MODES = {
+    "ignore": lambda client, files, **kw: NoDirectoriesFiles(client, files, **kw),
+    "recursive": lambda client, files, **kw: RecursiveFiles(client, files, **kw),
+    "fail": lambda client, files, **kw: NoDirectoriesFiles(client, files, **kw),
+}
+
+LARGE_FILE_MODES = {
+    "stream": LargeFilesStream,
+    "split": SplitFiles,
+    "fail": LargeFilesFail,
+}
 
 
 def upload_files(
@@ -22,29 +46,62 @@ def upload_files(
     caption: Optional[str] = None,
     thumbnail: Optional[str] = None,
     force_file: bool = False,
-    recursive: bool = False,
     delete_on_success: bool = False,
     as_album: bool = False,
     sort: bool = False,
-    **kwargs
-):
+    *,
+    directories: str = "ignore",          # ignore | recursive | fail
+    large_files: str = "stream",          # stream | split | fail
+    no_thumbnail: bool = False,           # mimic CLI flag
+    warn: Optional[WarnFunc] = None,
+    **_,
+) -> List:
     """
-    Upload one or more files to Telegram.
+    Upload file(s) to Telegram – *same behaviour as CLI upload command*.
+    All optional flags mirror the CLI names.  No click dependency.
     """
+    if warn is None:
+        warn = lambda msg: print(msg, file=sys.stderr)
+
+    # ---------- normalise ----------
     if isinstance(files, str):
         files = [files]
+    if to is None:
+        to = "me"
+    if isinstance(to, str) and to.lstrip("-+").isdigit():
+        to = int(to)
+
+    # ---------- validate files ----------
+    files = filter(lambda f: is_valid_file(f, lambda m: warn(m)), files)
+
+    # ---------- directory mode ----------
+    files_iter_cls = DIRECTORY_MODES[directories]
+    files = files_iter_cls(
+        client, files, thumbnail=thumbnail, force_file=force_file, caption=caption
+    )
+    if directories == "fail":           # force early validation
+        files = list(files)
+
+    # ---------- large-file mode ----------
+    if no_thumbnail:                    # CLI semantic
+        thumbnail = False
+    files_cls = LARGE_FILE_MODES[large_files]
+    files = files_cls(
+        client, files, caption=caption, thumbnail=thumbnail, force_file=force_file
+    )
+    if large_files == "fail":
+        files = list(files)
+
+    # ---------- sort ----------
     if sort:
-        files = sorted(files)
-    if recursive:
-        files_iter = RecursiveFiles(client, files, thumbnail=thumbnail, force_file=force_file, caption=caption)
-    else:
-        files_iter = NoDirectoriesFiles(client, files, thumbnail=thumbnail, force_file=force_file, caption=caption)
+        files = (natsorted(files, key=lambda x: x.name) if natsorted
+                 else sorted(files, key=lambda x: x.name))
+
+    # ---------- send ----------
     if as_album:
-        return client.send_files_as_album(to, files_iter, delete_on_success=delete_on_success)
+        return client.send_files_as_album(to, files, delete_on_success, print_file_id=False)
     else:
-        return client.send_files(to, files_iter, delete_on_success=delete_on_success)
-
-
+        return client.send_files(to, files, delete_on_success, print_file_id=False)
 def download_files(
     client: TelegramManagerClient,
     entity: str,
