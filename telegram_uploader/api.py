@@ -12,9 +12,10 @@ from .upload_files import (
 )
 from .download_files import DownloadFile, KeepDownloadSplitFiles, JoinDownloadSplitFiles
 from .exceptions import TelegramUploadError
-from .utils import natsorted
-
-
+try:
+    from natsort import natsorted
+except ImportError:
+    natsorted = None
 def create_client(config_file: Optional[str] = None, proxy: Optional[str] = None, **kwargs) -> TelegramManagerClient:
     """
     Create and return a TelegramManagerClient instance.
@@ -90,9 +91,10 @@ def upload_files(
         files = list(files)
 
     # ---------- sort ----------
-    if sort:
-        files = (natsorted(files, key=lambda x: x.name) if natsorted
-                 else sorted(files, key=lambda x: x.name))
+    if sort and natsorted:
+        files = natsorted(files, key=lambda x: x.name)
+    elif sort:
+        files = sorted(files, key=lambda x: x.name)
 
     # ---------- send ----------
     if as_album:
