@@ -12,7 +12,7 @@ Telegram-uploader can be used both as a **command-line tool** and as a **Python 
 
 **Python Library Usage:**
 
-See `docs/library_api.md` for full API reference and code examples for all features.
+See `Docs <docs/library_api.md>`_ for full API reference and code examples for all features.
 
 Telegram-uploader uses your **personal Telegram account** to **upload** / **download**  files up to **4 GiB** (2 GiB for
 free users) and ext actions. Turn Telegram into your personal ☁ cloud!

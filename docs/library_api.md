@@ -310,6 +310,6 @@ if validate_file('myfile.mp4'):
 ## Notes
 - All methods require a valid `TelegramManagerClient` (use `create_client`).
 - For advanced usage, see the Telethon documentation.
-- For CLI usage, see [COMMANDS.md](./docs/COMMANDS.md).
+- For CLI usage, see [COMMANDS.md](./COMMANDS.md).
 
 ---
