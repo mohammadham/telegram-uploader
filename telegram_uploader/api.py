@@ -9,8 +9,6 @@ from .upload_files import (
     RecursiveFiles,
     NoLargeFiles,
     SplitFiles,
-    LargeFilesStream,
-    LargeFilesFail,
 )
 from .download_files import DownloadFile, KeepDownloadSplitFiles, JoinDownloadSplitFiles
 from .exceptions import TelegramUploadError
@@ -33,9 +31,8 @@ DIRECTORY_MODES = {
 }
 
 LARGE_FILE_MODES = {
-    "stream": LargeFilesStream,
-    "split": SplitFiles,
-    "fail": LargeFilesFail,
+    'fail': NoLargeFiles,
+    'split': SplitFiles,
 }
 
 
@@ -51,7 +48,7 @@ def upload_files(
     sort: bool = False,
     *,
     directories: str = "ignore",          # ignore | recursive | fail
-    large_files: str = "stream",          # stream | split | fail
+    large_files: str = "fail",          #   split | fail
     no_thumbnail: bool = False,           # mimic CLI flag
     warn: Optional[WarnFunc] = None,
     **_,
