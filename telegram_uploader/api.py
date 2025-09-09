@@ -12,6 +12,7 @@ from .upload_files import (
 )
 from .download_files import DownloadFile, KeepDownloadSplitFiles, JoinDownloadSplitFiles
 from .exceptions import TelegramUploadError
+from typing import Callable
 try:
     from natsort import natsorted
 except ImportError:
