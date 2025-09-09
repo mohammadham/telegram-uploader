@@ -44,32 +44,66 @@ client = create_client(config_file='~/.config/telegram-upload.json')
 ```
 
 ---
-
 ### 2. upload_files
 
-**Description:**
-Upload one or more files to Telegram.
+**Description:**  
+Upload one or more files to Telegram.  
+Behaviour is **identical** to the CLI `upload` command (validation, large-file handling, directory mode, natural sort, etc.).
 
-**Signature:**
+**Signature:**  
 ```python
-def upload_files(client, files, to=None, caption=None, thumbnail=None, force_file=False, recursive=False, delete_on_success=False, as_album=False, sort=False):
+def upload_files(
+    client: TelegramManagerClient,
+    files: Union[str, List[str]],
+    to: Optional[str] = None,
+    caption: Optional[str] = None,
+    thumbnail: Optional[str] = None,
+    force_file: bool = False,
+    delete_on_success: bool = False,
+    as_album: bool = False,
+    sort: bool = False,
+    *,
+    directories: str = "ignore",   # "ignore" | "recursive" | "fail"
+    large_files: str = "stream",   # "stream" | "split" | "fail"
+    no_thumbnail: bool = False,
+    warn: Optional[Callable[[str], None]] = None,
+) -> List[Message]:
 ```
-- `client`: TelegramManagerClient instance
-- `files`: str or list of file paths
-- `to`: Destination chat/channel/group (default: saved messages)
-- `caption`: Caption for the file(s)
-- `thumbnail`: Path to thumbnail image
-- `force_file`: Force send as file (not media)
-- `recursive`: Recursively upload files in directories
-- `delete_on_success`: Delete local file after upload
-- `as_album`: Send as album (for media)
-- `sort`: Sort files by name before upload
 
-**Example:**
+**Parameters:**  
+- `client`: `TelegramManagerClient` instance  
+- `files`: single path or list of file / folder paths  
+- `to`: username, ID, phone, or "me" (saved messages). Numeric strings are auto-converted to `int`  
+- `caption`: final caption after template formatting (same CLI rules)  
+- `thumbnail`: path to custom thumbnail; use `no_thumbnail=True` to disable automatic thumbs  
+- `force_file`: send as document, never as photo / video  
+- `delete_on_success`: delete local file once upload finishes  
+- `as_album`: group media into an album (max 10 per album)  
+- `sort`: natural sort by file name (`natsorted` if available, else `sorted`)  
+
+**Directory / large-file flags (keyword-only):**  
+- `directories="ignore"` → skip folders | `"recursive"` → recurse | `"fail"` → raise on folder  
+- `large_files="stream"` → auto-stream big files | `"split"` → split into parts | `"fail"` → raise  
+- `no_thumbnail=True` → disable automatic thumbnail extraction  
+- `warn`: optional callback `callable(str)` for validation errors (default: `print` to stderr)
+
+**Return value:**  
+List of `telethon.tl.custom.message.Message` objects that were sent.
+
+**Example:**  
 ```python
-upload_files(client, files=['a.mp4', 'b.jpg'], to='@mychannel', caption='My files', as_album=True)
+messages = upload_files(
+    client,
+    files=["vid.mp4", "pics/"],
+    to="@mychannel",
+    caption="Episode {file.name}  ({now:%Y-%m-%d})",
+    directories="recursive",
+    large_files="split",
+    as_album=True,
+    sort=True,
+    delete_on_success=True,
+)
 ```
-
 ---
 
 ### 3. download_files
