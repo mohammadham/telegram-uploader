@@ -101,7 +101,9 @@ def upload_files(
     if as_album:
         return client.send_files_as_album(to, files, delete_on_success, print_file_id=False)
     else:
-        return client.send_files(to, files, delete_on_success, print_file_id=False)
+        msgs = client.send_files(to, files, delete_on_success, print_file_id=False)
+        # print("DEBUG upload_files ->", len(msgs))   # ← اگر 1 باشد مشکل از اینجا به بعد است
+        return msgs
 def download_files(
     client: TelegramManagerClient,
     entity: str,

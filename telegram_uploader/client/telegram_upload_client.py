@@ -179,9 +179,21 @@ class TelegramUploadClient(TelegramClient):
                                                                             pack_bot_file_id(message.media)))
             if message and delete_on_success:
                 click.echo('Deleting "{}"'.format(file))
-                os.remove(file.path)
-            if message:
-                self.forward_to(message, forward)
+                try:
+                    os.remove(file.path)
+                except Exception as e:
+                    click.echo(f'Could not delete file "{file.path}": {e}', err=True)
+                finally:
+                    click.echo('Deleting successfully')
+            if message   and forward:
+                click.echo('Forwarding "{}"'.format(file))
+                try:
+                    self.forward_to(message, forward)
+                except Exception as e:
+                    click.echo(f'Could not forward file "{file.path}": {e}', err=True)
+                finally:
+                    click.echo('Forwarding successfully')
+            if message :
                 messages.append(message)
         if not has_files:
             raise MissingFileError('Files do not exist.')
