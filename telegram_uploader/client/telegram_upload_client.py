@@ -87,15 +87,25 @@ class TelegramUploadClient(TelegramClient):
             entity, multi_media=media, silent=None, schedule_date=None, clear_draft=None
         )
         result = await self(request)
-
-        random_ids = [m.random_id for m in media]
-        return self._get_response_message(random_ids, result, entity)
+        
+        # Extract messages from the result
+        if hasattr(result, 'updates'):
+            messages = []
+            for update in result.updates:
+                if hasattr(update, 'message'):
+                    messages.append(update.message)
+            return messages
+        return []
 
     def send_files_as_album(self, entity, files, delete_on_success=False, print_file_id=False,
                             forward=()):
+        messages = []
         for files_group in grouper(ALBUM_FILES, files):
             media = self.send_files(entity, files_group, delete_on_success, print_file_id, forward, send_as_media=True)
-            async_to_sync(self._send_album_media(entity, media))
+            album_messages = async_to_sync(self._send_album_media(entity, media))
+            if album_messages:
+                messages.extend(album_messages)
+        return messages
 
     def _send_file_message(self, entity, file, thumb, progress):
         message = self.send_file(entity, file, thumb=thumb,
