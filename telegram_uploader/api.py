@@ -133,7 +133,7 @@ def download_files(
         if os.path.exists(save_path) and not overwrite:
             continue
         download_file.set_download_file_name(save_path)
-        results.append(client.download_files(entity, [download_file], delete_on_success=delete_on_success))
+        results.append(client.download_files(entity, [download_file], delete_on_success=delete_on_success , save_dir=output_dir, overwrite=overwrite))
     return results
 def delete_messages(client: TelegramManagerClient, entity: str, message_ids: Union[int, List[int]]):
     """

@@ -38,7 +38,7 @@ class TelegramDownloadClient(TelegramClient):
             if message.document:
                 yield message
 
-    def download_files(self, entity, download_files: Iterable[DownloadFile], delete_on_success: bool = False):
+    def download_files(self, entity, download_files: Iterable[DownloadFile], delete_on_success: bool = False , save_dir: str = None, overwrite: bool = False):
         for download_file in download_files:
             if download_file.size > free_disk_usage():
                 raise TelegramUploadNoSpaceError(
@@ -49,7 +49,16 @@ class TelegramDownloadClient(TelegramClient):
             progress, bar = get_progress_bar('Downloading', download_file.file_name, download_file.size)
             file_name = download_file.file_name
             try:
-                file_name = self.download_media(download_file.message, progress_callback=progress)
+                if save_dir not in (None, '', '.'):
+                    pathlib.Path(save_dir).mkdir(parents=True, exist_ok=True)
+                    file_name = str(pathlib.Path(save_dir) / pathlib.Path(download_file.file_name).name)
+                    if overwrite and pathlib.Path(file_name).exists():
+                        pathlib.Path(file_name).unlink()
+                        file_name = self.download_media(download_file.message,file=file_name, progress_callback=progress)                    
+                    else:
+                        file_name = self.download_media(download_file.message,file=save_dir, progress_callback=progress)                    
+                else:
+                    file_name = self.download_media(download_file.message, progress_callback=progress)
                 download_file.set_download_file_name(file_name)
             finally:
                 bar.label = f'Downloaded  "{file_name}"'
