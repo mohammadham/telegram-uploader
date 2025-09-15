@@ -1,3 +1,7 @@
+0.9.4 (2025-09-15)
+------------------
+
+* Add new functions like stream_telegram_file and update download_files with new parameter
 0.9.0 (2025-09-01)
 ------------------
 

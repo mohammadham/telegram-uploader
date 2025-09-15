@@ -1,6 +1,7 @@
 """
 High-level Python API for telegram-uploader library.
 """
+import asyncio
 from typing import List, Optional, Union
 from .client.telegram_manager_client import TelegramManagerClient
 from .upload_files import (
@@ -13,6 +14,7 @@ from .upload_files import (
 from .download_files import DownloadFile, KeepDownloadSplitFiles, JoinDownloadSplitFiles
 from .exceptions import TelegramUploadError
 from typing import Callable
+import sys
 try:
     from natsort import natsorted
 except ImportError:
@@ -99,9 +101,13 @@ def upload_files(
 
     # ---------- send ----------
     if as_album:
-        return client.send_files_as_album(to, files, delete_on_success, print_file_id=False)
+        msgs =  client.send_files_as_album(to, files, delete_on_success, print_file_id=False)
+        print("DEBUG album upload_files ->", len(msgs))   # ← اگر 1 باشد مشکل از اینجا به بعد است
+        return msgs
     else:
-        return client.send_files(to, files, delete_on_success, print_file_id=False)
+        msgs = client.send_files(to, files, delete_on_success, print_file_id=False)
+        print("DEBUG upload_files ->", len(msgs))   # ← اگر 1 باشد مشکل از اینجا به بعد است
+        return msgs
 def download_files(
     client: TelegramManagerClient,
     entity: str,
@@ -129,8 +135,23 @@ def download_files(
         if os.path.exists(save_path) and not overwrite:
             continue
         download_file.set_download_file_name(save_path)
-        results.append(client.download_files(entity, [download_file], delete_on_success=delete_on_success))
+        results.append(client.download_files(entity, [download_file], delete_on_success=delete_on_success , save_dir=output_dir, overwrite=overwrite))
     return results
+async def stream_telegram_file(client: TelegramManagerClient, chat: str, message_id: int, chunk_size: int = 1024*64):
+    """
+    استریم فایل تلگرام به صورت async generator (بدون ذخیره روی دیسک)
+    قابل استفاده برای StreamingResponse در FastAPI و ...
+    Example:
+        @app.get("/download/{chat}/{message_id}")
+        async def download(chat: str, message_id: int):
+            generator = stream_telegram_file(client, chat, message_id)
+            return StreamingResponse(generator, media_type="application/octet-stream")
+    """
+    # اگر کلاینت sync بود، به حالت async تبدیل کن
+    if not hasattr(client, 'stream_file'):
+        raise NotImplementedError("client must be TelegramDownloadClient or subclass")
+    async for chunk in client.stream_file(chat, message_id, chunk_size=chunk_size):
+        yield chunk
 def delete_messages(client: TelegramManagerClient, entity: str, message_ids: Union[int, List[int]]):
     """
     Delete one or more messages from a chat/channel/group by message ID.

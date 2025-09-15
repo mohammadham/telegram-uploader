@@ -26,6 +26,19 @@ PARALLEL_DOWNLOAD_BLOCKS = get_environment_integer('TELEGRAM_UPLOAD_PARALLEL_DOW
 
 
 class TelegramDownloadClient(TelegramClient):
+    async def stream_file(self, chat, message_id, chunk_size=1024*64):
+        """
+        استریم فایل تلگرام به صورت async generator (بدون ذخیره روی دیسک)
+        chat: شناسه یا یوزرنیم چت
+        message_id: آیدی پیام
+        chunk_size: سایز هر پارت (بایت)
+        خروجی: async generator از بایت‌های فایل
+        """
+        message = await self.get_messages(chat, ids=message_id)
+        if not message or not getattr(message, 'media', None):
+            raise ValueError("پیام حاوی فایل نیست.")
+        async for chunk in self.iter_download(message.media, chunk_size=chunk_size):
+            yield chunk
     def find_files(self, entity):
         for message in self.iter_messages(entity):
             if message.document:
@@ -38,7 +51,7 @@ class TelegramDownloadClient(TelegramClient):
             if message.document:
                 yield message
 
-    def download_files(self, entity, download_files: Iterable[DownloadFile], delete_on_success: bool = False):
+    def download_files(self, entity, download_files: Iterable[DownloadFile], delete_on_success: bool = False , save_dir: str = None, overwrite: bool = False):
         for download_file in download_files:
             if download_file.size > free_disk_usage():
                 raise TelegramUploadNoSpaceError(
@@ -49,7 +62,16 @@ class TelegramDownloadClient(TelegramClient):
             progress, bar = get_progress_bar('Downloading', download_file.file_name, download_file.size)
             file_name = download_file.file_name
             try:
-                file_name = self.download_media(download_file.message, progress_callback=progress)
+                if save_dir not in (None, '', '.'):
+                    pathlib.Path(save_dir).mkdir(parents=True, exist_ok=True)
+                    file_name = str(pathlib.Path(save_dir) / pathlib.Path(download_file.file_name).name)
+                    if overwrite and pathlib.Path(file_name).exists():
+                        pathlib.Path(file_name).unlink()
+                        file_name = self.download_media(download_file.message,file=file_name, progress_callback=progress)                    
+                    else:
+                        file_name = self.download_media(download_file.message,file=save_dir, progress_callback=progress)                    
+                else:
+                    file_name = self.download_media(download_file.message, progress_callback=progress)
                 download_file.set_download_file_name(file_name)
             finally:
                 bar.label = f'Downloaded  "{file_name}"'
