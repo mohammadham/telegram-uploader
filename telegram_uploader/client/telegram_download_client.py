@@ -26,6 +26,19 @@ PARALLEL_DOWNLOAD_BLOCKS = get_environment_integer('TELEGRAM_UPLOAD_PARALLEL_DOW
 
 
 class TelegramDownloadClient(TelegramClient):
+    async def stream_file(self, chat, message_id, chunk_size=1024*64):
+        """
+        استریم فایل تلگرام به صورت async generator (بدون ذخیره روی دیسک)
+        chat: شناسه یا یوزرنیم چت
+        message_id: آیدی پیام
+        chunk_size: سایز هر پارت (بایت)
+        خروجی: async generator از بایت‌های فایل
+        """
+        message = await self.get_messages(chat, ids=message_id)
+        if not message or not getattr(message, 'media', None):
+            raise ValueError("پیام حاوی فایل نیست.")
+        async for chunk in self.iter_download(message.media, chunk_size=chunk_size):
+            yield chunk
     def find_files(self, entity):
         for message in self.iter_messages(entity):
             if message.document:
