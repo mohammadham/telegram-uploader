@@ -12,9 +12,9 @@ jobs:
     runs-on: ubuntu-latest
     permissions: write-all
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - name: Run pip-rating
-        uses: Nekmo/pip-rating@v0.3.1
+        uses: Nekmo/pip-rating@master
         with:
           create_badge: true
           badge_style: flat-square
