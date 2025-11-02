@@ -1,0 +1,41 @@
+name: Security Audit
+
+on:
+  push:
+    branches:
+      - master
+  schedule:
+    - cron: '0 0 * * SUN'
+  pull_request:
+
+jobs:
+  security-audit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+          
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pip-audit
+          
+      - name: Run pip-audit
+        run: |
+          pip-audit --desc --format json --output audit-report.json || true
+          pip-audit --desc
+          
+      - name: Upload audit report
+        uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: security-audit-report
+          path: audit-report.json
