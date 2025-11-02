@@ -14,7 +14,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Run pip-rating
-        uses: Nekmo/pip-rating@master
+        uses: Nekmo/pip-rating@v0.2.2
         with:
           create_badge: true
           badge_style: flat-square
